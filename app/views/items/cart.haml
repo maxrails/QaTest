@@ -1,0 +1,19 @@
+-if @items.present?
+  %h3 Your Cart
+  %table.table
+    %th Name
+    %th Image
+    %th
+    -@items.each do |item|
+      %tr
+        %td
+          %h5= item.name.try(:upcase)
+        %td= image_tag item.get_thumb_url
+        %td
+          -if @cart.include?(item.id)
+            = link_to 'Remove from Cart', "/remove_from_cart?id=#{item.id+1}", class: 'btn btn-danger'
+          -else
+            = link_to 'Add to Cart', "/add_to_cart?id=#{item.id}", class: 'btn btn-success'
+  =link_to 'Order', '/order', id: 'place_an_order', class: 'btn btn-success btn-lg', style: 'width: 100%'
+-else
+  %p.alert There is nothing in your carD

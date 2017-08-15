@@ -1,0 +1,25 @@
+-if @items.present?
+  %h3= @item_type.humanize
+  %table.table.table-hover.table-striped
+    %th Name
+    %th Image
+    %th
+    -@items.each_with_index do |item, index|
+      %tr
+        %td
+          %h5= item.name.try(:upcase)
+        %td= image_tag item.get_thumb_url
+        %td
+          -if current_user
+            -if @cart.include?(item.id)
+              = link_to 'Remove from Cart', "/remove_from_cart?id=#{item.id+1}", class: 'btn btn-danger'
+            -else
+              = link_to 'Add to Cart', "/add_to_cart?id=#{item.id}", class: 'btn btn-success'
+          -else
+            -if index%2 == 0
+              = link_to 'Add to Cart', "/add_to_cart?id=#{item.id}", class: 'btn btn-success'
+
+  %p
+    = will_paginate @items,  :params => { controller: 'items', action: 'index'}
+-else
+  =render 'items/non_existent_category'

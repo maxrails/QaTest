@@ -1,0 +1,17 @@
+.table-responsiv
+  -if current_user
+    -if @orders.present?
+      %table.table.table-hover.table-striped
+        %th Ids
+        %th Date
+        -@orders.each do |item|
+          %tr
+            %td= item.code
+            %td= item.created_at.strftime('%b %d %Y')
+    -else
+      %p.alert.bg-danger You do not have any orders yet.
+  -else
+    %p.alert.bg-danger Login/Signup first
+
+
+
